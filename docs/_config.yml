@@ -1,1 +1,19 @@
 theme: jekyll-theme-hacker
+
+name: Dungeon RPG Bot
+title: Dungeon RPG Bot
+descripton: Bot to add RPG elements to a Telegram group chat
+show_downloads: true
+logo: assets/telegram-dungeon.jpg
+
+# Setup
+title:        Dungeon RPG Bot
+tagline:      Bot to add RPG elements to a Telegram group chat.
+locale:       "en"
+
+# About/contact
+author:
+  name:       Ryan Fleck
+  url:        https://ryanfleck.github.io
+
+markdown: kramdown
