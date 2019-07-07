@@ -10,6 +10,8 @@ The roll function, by default, rolls a D20, returning 1-20.
 
 Specifying a die with a different number of sides (more than 2) returns a
 number between 0 and n+1, including numbers 1 to n. Unit tests provided.
+
+See: https://docs.python.org/3.7/library/unittest.html
 '''
 
 

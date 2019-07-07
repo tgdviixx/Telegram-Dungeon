@@ -6,6 +6,7 @@ import re
 
 # Get Utils.
 from utils.roll import roll
+from utils.character import Character
 
 '''
 COMMANDS:
@@ -16,6 +17,9 @@ hello - Test the bot.
 
 # Regex for all functions:
 d6_regex = re.compile(r'((d|D)(\d+))')
+
+# Pre-database development, store character info in memory.
+characters = {}
 
 # Set debugging level based on environment.
 if os.getenv('DYNO'):
@@ -58,7 +62,7 @@ def action_set_role(bot, update):
 
 
 def main():
-    # Start the bot.
+    '''Start the bot.'''
     updater = Updater(os.getenv('JAMES_TELEGRAM'))
     updater.dispatcher.add_handler(CommandHandler('hello', hello))
     updater.dispatcher.add_handler(CommandHandler('roll', action_roll_die))
