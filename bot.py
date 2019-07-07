@@ -45,7 +45,7 @@ def action_roll_die(bot, update):
     result = roll(update.message.text)
     if(result[0]):
         update.message.reply_text(
-            '(D{}) {} rolled a {}'.format(
+            '(D{}) {} rolled {}'.format(
                 result[0],
                 update.message.from_user.first_name,
                 result[1]))
