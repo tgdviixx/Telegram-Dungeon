@@ -1,4 +1,5 @@
 from telegram.ext import Updater, CommandHandler
+from pprint import pprint
 import random
 import logging
 import os
@@ -33,32 +34,40 @@ else:
 
 
 def hello(bot, update):
-    logging.debug('Got a HELLO command.')
-    update.message.reply_text(
-        'Hello, {}. I am JAMES, the Dungeon bot.\n\n{}'.format(
-            update.message.from_user.first_name, str(
-                update.message.from_user)))
+    logging.info('Got a HELLO command.')
+    bot.send_message(chat_id=update.message.chat_id,
+                     text='Hello, {}. I am JAMES, the Dungeon bot.\n\n{}'.format(
+                         update.message.from_user.first_name, str(
+                             update.message.from_user)))
 
 
 def action_roll_die(bot, update):
-    logging.debug('Got a ROLL command.')
+    logging.info('Got a ROLL command.')
     result = roll(update.message.text)
     if(result[0]):
-        update.message.reply_text(
-            '(D{}) {} rolled {}'.format(
+        bot.send_message(
+            chat_id=update.message.chat_id,
+            text='(D{}) {} rolled {}'.format(
                 result[0],
                 update.message.from_user.first_name,
                 result[1]))
     else:
-        update.message.reply_text('The die fell off the table.')
+        bot.send_message(chat_id=update.message.chat_id,
+                         text='The die fell off the table.')
 
 
 def action_set_role(bot, update):
-    logging.debug('Got a HELLO command.')
-    update.message.reply_text(
-        'Hello, {}.\n{}'.format(
-            update.message.from_user.first_name, str(
-                update.message.from_user)))
+    logging.info('Got a SET-ROLE command.')
+
+
+def action_debug(bot, update):
+    logging.info('Got a DEBUG command.')
+    print("\n\nBOT:")
+    pprint(bot)
+    print("\n\nUPDATE:")
+    pprint(update)
+    pprint(update)
+    print("\n\n")
 
 
 def main():
@@ -67,6 +76,7 @@ def main():
     updater.dispatcher.add_handler(CommandHandler('hello', hello))
     updater.dispatcher.add_handler(CommandHandler('roll', action_roll_die))
     updater.dispatcher.add_handler(CommandHandler('set_role', action_set_role))
+    updater.dispatcher.add_handler(CommandHandler('debug', action_debug))
 
     logging.info('Starting JAMES bot.')
     if os.getenv('DYNO'):
