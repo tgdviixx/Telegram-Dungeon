@@ -1,13 +1,24 @@
 import re
 import random
 import logging
+import unittest
+
+'''
+This file contains the logic for rolling a single die.
+
+The roll function, by default, rolls a D20, returning 1-20.
+
+Specifying a die with a different number of sides (more than 2) returns a
+number between 0 and n+1, including numbers 1 to n. Unit tests provided.
+'''
+
 
 d6_regex = re.compile(r'((d|D)(\d+))')
 
 
 def roll(message):
     '''Given a message, returns tuple (Diesize, Result)'''
-    logging.info('Rolling die, input: ' + str(message))
+    logging.debug('Rolling die, input: ' + str(message))
     dice = d6_regex.findall(message)
     if message and dice:
         try:
@@ -25,13 +36,28 @@ def roll(message):
         return (20, result)
 
 
+class TestRoll(unittest.TestCase):
+
+    def test_roll(self):
+        for x in range(100):
+            self.assertTrue(roll('')[1] in range(21))
+
+    def test_regex(self):
+        self.assertEqual(roll('D10')[0], 10)
+        self.assertEqual(roll('d45')[0], 45)
+        self.assertEqual(roll('Roll a D13 bro D30')[0], 13)
+        self.assertEqual(roll('d999')[0], 999)
+
+    def test_regex_roll(self):
+        for x in range(100):
+            self.assertTrue(roll('D45')[1] in range(46))
+        for x in range(100):
+            self.assertTrue(roll('d6')[1] in range(7))
+
+
 if __name__ == '__main__':
     logging.basicConfig(
         format='%(asctime)s : %(message)s',
-        level=logging.DEBUG)
+        level=logging.INFO)
 
-    logging.debug('Rolling a die: ' + str(roll('Roll me a D6')))
-    logging.debug('Rolling a die: ' + str(roll('D12 baybee')))
-    logging.debug('Rolling a die: ' + str(roll('')))
-    logging.debug('Rolling a die: ' + str(roll('lmao die')))
-    logging.debug('Rolling a die: ' + str(roll('D3')))
+    unittest.main()
