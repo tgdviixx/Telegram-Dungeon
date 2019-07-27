@@ -6,8 +6,8 @@ import os
 import re
 
 # Get Utils.
-from utils.roll import roll
-from utils.character import Character
+from src.roll import roll
+from src.character import Character
 
 '''
 COMMANDS:
