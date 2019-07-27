@@ -2,6 +2,7 @@ import unittest
 import logging
 from src.roll import roll
 
+
 class RollTest(unittest.TestCase):
 
     def test_roll(self):
