@@ -1,5 +1,4 @@
 import unittest
-import logging
 from src.roll import roll
 
 
@@ -20,11 +19,3 @@ class RollTest(unittest.TestCase):
             self.assertTrue(roll('D45')[1] in range(46))
         for _ in range(100):
             self.assertTrue(roll('d6')[1] in range(7))
-
-
-if __name__ == '__main__':
-    logging.basicConfig(
-        format='%(asctime)s : %(message)s',
-        level=logging.INFO)
-
-    unittest.main()
