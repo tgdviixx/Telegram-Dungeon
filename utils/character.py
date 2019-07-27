@@ -1,18 +1,20 @@
 import logging
 import unittest
 import datetime
+from entity import Entity
 
 '''
 The Character class stores all information about player and non-player characters.
 '''
 
 
-class Character:
+class Character(Entity):
     '''Stores all information about a player character.'''
 
     # Class variables shared by all instances.
 
     def __init__(self, identity, name):
+        super().__init__()
 
         # Instance variables unique to each instance.
 
@@ -21,8 +23,6 @@ class Character:
         self.init_date = datetime.datetime.now()
 
         self.inventory = {}
-        self.health = 100
-        self.stamina = 100
         self.magicka = 10
 
 
