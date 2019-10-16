@@ -5,6 +5,8 @@ import logging
 import os
 import re
 
+print(os.getenv("JAMES_TELEGRAM"))
+
 # Get Utils.
 from src.roll import roll
 from src.character import Character
@@ -71,6 +73,7 @@ def action_debug(bot, update):
 
 
 def main():
+    print("Starting bot.")
     '''Start the bot.'''
     updater = Updater(os.getenv('JAMES_TELEGRAM'))
     updater.dispatcher.add_handler(CommandHandler('hello', hello))
