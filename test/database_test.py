@@ -1,8 +1,9 @@
 import unittest
-from src.database import connect
+from src.database import Database
 
 
 class RollTest(unittest.TestCase):
 
     def test_roll(self):
-        self.assertTrue(connect())
+        mainbase = Database()
+        self.assertTrue(mainbase.connect())

@@ -10,6 +10,7 @@ print(os.getenv("JAMES_TELEGRAM"))
 # Get Utils.
 from src.roll import roll
 from src.character import Character
+from src.database import Database
 
 '''
 COMMANDS:
