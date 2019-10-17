@@ -1,8 +1,9 @@
 import os
 
 '''
-See here for the excellent SQLAlchemy tutorial:
-https://docs.sqlalchemy.org/en/13/orm/tutorial.html
+SQLAlchemy tutorials:
+1. https://docs.sqlalchemy.org/en/13/orm/tutorial.html
+2. https://leportella.com/english/2019/01/10/sqlalchemy-basics-tutorial.html#engine-connection
 '''
 
 
@@ -37,11 +38,17 @@ Session = sessionmaker(bind=engine)
 
 print("\n\n\nStarting session and creating users...")
 session = Session()
-'''
-session.add(testuser)
-session.add(User(name='test2', fullname='testothy jones 2', nickname='testy', age=19))
-session.add(User(name='test3', fullname='testothy jones 3', nickname='testy', age=19))
-'''
+
+def addUser(userObj):
+    copy = session.query(User).filter_by(name=userObj.name).first()
+    if(not copy):
+        session.add(userObj)
+    else:
+        print("User with that name already exists. Not adding.\n")
+
+addUser(testuser)
+addUser(User(name='test2', fullname='testothy jones 2', nickname='testy', age=19))
+addUser(User(name='test3', fullname='testothy jones 3', nickname='testy', age=19))
 
 print("\n\n\nCommit session...")
 session.commit()
