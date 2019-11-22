@@ -1,5 +1,5 @@
 from telegram.ext import Updater, CommandHandler
-from pprint import pprint
+from pprint import pprint, pformat
 import random
 import logging
 import os
@@ -11,6 +11,7 @@ print(os.getenv("JAMES_TELEGRAM"))
 from src.roll import roll
 from src.character import Character
 from src.database import Database
+from src.debug import debug
 
 INSTRUCTIONS = '''
 Commands:
@@ -70,12 +71,7 @@ def action_set_role(bot, update):
 
 def action_debug(bot, update):
     logging.info('Got a DEBUG command.')
-    print("\n\nBOT:")
-    pprint(bot)
-    print("\n\nUPDATE:")
-    pprint(update)
-    pprint(update)
-    print("\n\n")
+    debug(bot, update)
 
 
 def main():
