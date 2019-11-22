@@ -1,27 +1,33 @@
 import logging
 import unittest
+import os
 import datetime
-from src.entity import Entity
+
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
 
 '''
 The Character class stores all information about player and non-player characters.
 '''
 
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
 
-class Character(Entity):
-    '''Stores all information about a player character.'''
+Base = declarative_base()
 
-    # Class variables shared by all instances.
+class Character(Base):
+    __tablename__ = "characters"
 
-    def __init__(self, identity, name):
-        super().__init__()
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    fullname = Column(String)
+    nickname = Column(String)
+    age = Column(Integer)
 
-        # Instance variables unique to each instance.
+    def __repr__(self):
+        return "<User(name='%s', fullname='%s', nickname='%s', age='%i')>" % \
+            (self.name, self.fullname, self.nickname, self.age)
 
-        self.realname = name
-        self.charactername = name
-        self.init_date = datetime.datetime.now()
 
-        self.inventory = {}
-        self.magicka = 10
-
+engine = create_engine(os.getenv('DATABASE_URL'), echo=True)
+Base.metadata.create_all(engine)
