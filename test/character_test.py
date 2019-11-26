@@ -61,3 +61,38 @@ class CharacterTest(unittest.TestCase):
             session.commit()
 
         session.close()
+
+    def test_5_modify_properties(self):
+        session = Session()
+
+        testothy = session.query(Character).get(123)
+        
+        self.assertEqual('Testothy Jones', testothy.name) 
+
+        testothy.properties['age'] = 28 
+        testothy.properties['weight'] = 300
+
+        self.assertIn('age', testothy.properties)
+        self.assertIn('weight', testothy.properties)
+        
+        self.assertEqual(28, testothy.properties['age'])
+        self.assertEqual(300, testothy.properties['weight'])
+
+        session.add(testothy)
+        session.commit()
+        session.close()
+
+    def test_6_modify_properties(self):
+        session = Session()
+
+        testothy = session.query(Character).get(123)
+        
+        self.assertIn('age', testothy.properties)
+        self.assertIn('weight', testothy.properties)
+
+        self.assertEqual(28, testothy.properties['age'])
+        self.assertEqual(300, testothy.properties['weight'])
+
+        session.close()
+            
+
