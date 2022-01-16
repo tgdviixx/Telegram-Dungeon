@@ -1,19 +1,24 @@
 from telegram.ext import Updater, CommandHandler
-from pprint import pprint
+from pprint import pprint, pformat
 import random
 import logging
 import os
 import re
 
+print(os.getenv("JAMES_TELEGRAM"))
+
 # Get Utils.
 from src.roll import roll
 from src.character import Character
+from src.database import Database
+from src.debug import debug
 
-'''
-COMMANDS:
+INSTRUCTIONS = '''
+Commands:
 roll - Roll a die. Optionally specify a D-Type (D6, d8, d40)
-set_role - Set user role.
+view_stats - View your character's stats.
 hello - Test the bot.
+set_role - Set user role.
 '''
 
 # Regex for all functions:
@@ -36,9 +41,10 @@ else:
 def hello(bot, update):
     logging.info('Got a HELLO command.')
     bot.send_message(chat_id=update.message.chat_id,
-                     text='Hello, {}. I am JAMES, the Dungeon bot.\n\n{}'.format(
-                         update.message.from_user.first_name, str(
-                             update.message.from_user)))
+                     text='Hello, {}. Welcome to The Dungeon.\n{}\n{}'.format(
+                         update.message.from_user.first_name,
+                         INSTRUCTIONS,
+                         str(update.message.from_user)))
 
 
 def action_roll_die(bot, update):
@@ -55,6 +61,9 @@ def action_roll_die(bot, update):
         bot.send_message(chat_id=update.message.chat_id,
                          text='The die fell off the table.')
 
+def action_view_stats(bot, update):
+    logging.info('Got a VIEW-STATS command.')
+
 
 def action_set_role(bot, update):
     logging.info('Got a SET-ROLE command.')
@@ -62,20 +71,17 @@ def action_set_role(bot, update):
 
 def action_debug(bot, update):
     logging.info('Got a DEBUG command.')
-    print("\n\nBOT:")
-    pprint(bot)
-    print("\n\nUPDATE:")
-    pprint(update)
-    pprint(update)
-    print("\n\n")
+    debug(bot, update)
 
 
 def main():
+    print("Starting bot.")
     '''Start the bot.'''
     updater = Updater(os.getenv('JAMES_TELEGRAM'))
     updater.dispatcher.add_handler(CommandHandler('hello', hello))
     updater.dispatcher.add_handler(CommandHandler('roll', action_roll_die))
     updater.dispatcher.add_handler(CommandHandler('set_role', action_set_role))
+    updater.dispatcher.add_handler(CommandHandler('view_stats', action_view_stats))
     updater.dispatcher.add_handler(CommandHandler('debug', action_debug))
 
     logging.info('Starting JAMES bot.')
